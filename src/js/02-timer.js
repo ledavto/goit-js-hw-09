@@ -2,6 +2,8 @@ import flatpickr from 'flatpickr';
 // Додатковий імпорт стилів
 import 'flatpickr/dist/flatpickr.min.css';
 
+import Notiflix from 'notiflix';
+
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
@@ -27,6 +29,7 @@ const hourEl = document.querySelector('span[data-hours]');
 const minEl = document.querySelector('span[data-minutes]');
 const secEl = document.querySelector('span[data-seconds]');
 const btnStart = document.querySelector('button[data-start]');
+btnStart.setAttribute('disabled', '');
 
 const options = {
   enableTime: true,
@@ -38,7 +41,8 @@ const options = {
     const date = new Date();
     if (selDate - date.getTime() <= 0) {
       btnStart.setAttribute('disabled', '');
-      window.alert('Please choose a date in the future');
+      //window.alert('Please choose a date in the future');
+      Notiflix.Notify.failure('Please choose a date in the future');
     } else btnStart.removeAttribute('disabled');
 
     console.log(selectedDates[0].getTime());
@@ -47,21 +51,30 @@ const options = {
 
 flatpickr(inputData, options);
 
+function addLeadingZero(value){
+  return value.padStart(2, "0");
+}
+
 btnStart.addEventListener('click', onClickBtn);
 
 function onClickBtn() {
-  const date = new Date();
   selDate = new Date(inputData.value);
   console.log(selDate.getTime());
 
-  setInterval(() => {
+  const timerId = setInterval(() => {
+    const date = new Date();
     const dateObj = convertMs(selDate.getTime() - date.getTime());
-    dayEl.textContent = dateObj.days;
-    hourEl.textContent = dateObj.hours;
-    minEl.textContent = dateObj.minutes;
-    secEl.textContent = dateObj.seconds;
-    console.log('12');
-  }, 1000);
+    if (selDate.getTime() <= date.getTime()) {
+      clearInterval(timerId);
+      return;
+    }
+
+    dayEl.textContent = addLeadingZero(String(dateObj.days));
+    hourEl.textContent = addLeadingZero(String(dateObj.hours));
+    minEl.textContent = addLeadingZero(String(dateObj.minutes));
+    secEl.textContent = addLeadingZero(String(dateObj.seconds));
+    
+    }, 1000);
 }
 
 function onStartTimer() {}
