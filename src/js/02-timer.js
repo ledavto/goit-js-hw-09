@@ -51,20 +51,20 @@ const options = {
 
 flatpickr(inputData, options);
 
-function addLeadingZero(value){
-  return value.padStart(2, "0");
+function addLeadingZero(value) {
+  return value.padStart(2, '0');
 }
 
 btnStart.addEventListener('click', onClickBtn);
 
 function onClickBtn() {
-  selDate = new Date(inputData.value);
-  console.log(selDate.getTime());
+  const numDate = new Date(inputData.value);
+  console.log(numDate.getTime());
 
   const timerId = setInterval(() => {
     const date = new Date();
-    const dateObj = convertMs(selDate.getTime() - date.getTime());
-    if (selDate.getTime() <= date.getTime()) {
+    const dateObj = convertMs(numDate.getTime() - date.getTime());
+    if (numDate.getTime() <= date.getTime()) {
       clearInterval(timerId);
       return;
     }
@@ -73,10 +73,5 @@ function onClickBtn() {
     hourEl.textContent = addLeadingZero(String(dateObj.hours));
     minEl.textContent = addLeadingZero(String(dateObj.minutes));
     secEl.textContent = addLeadingZero(String(dateObj.seconds));
-    
-    }, 1000);
+  }, 1000);
 }
-
-function onStartTimer() {}
-
-console.log(dayEl.textContent);
