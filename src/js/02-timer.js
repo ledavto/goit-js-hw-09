@@ -43,7 +43,9 @@ const options = {
       btnStart.setAttribute('disabled', '');
       //window.alert('Please choose a date in the future');
       Notiflix.Notify.failure('Please choose a date in the future');
-    } else btnStart.removeAttribute('disabled');
+    } else {
+      btnStart.removeAttribute('disabled');
+    }
 
     console.log(selectedDates[0].getTime());
   },
@@ -59,6 +61,9 @@ btnStart.addEventListener('click', onClickBtn);
 
 function onClickBtn() {
   const numDate = new Date(inputData.value);
+
+  btnStart.setAttribute('disabled', '');
+  inputData.setAttribute('disabled', '');
   console.log(numDate.getTime());
 
   const timerId = setInterval(() => {
@@ -66,6 +71,8 @@ function onClickBtn() {
     const dateObj = convertMs(numDate.getTime() - date.getTime());
     if (numDate.getTime() <= date.getTime()) {
       clearInterval(timerId);
+      btnStart.removeAttribute('disabled');
+      inputData.removeAttribute('disabled');
       return;
     }
 

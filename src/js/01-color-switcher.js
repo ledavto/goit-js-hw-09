@@ -9,14 +9,17 @@ const elBody = document.body;
 const startBtn = document.querySelector('button[data-start]');
 const stopBtn = document.querySelector('button[data-stop]');
 
-startBtn.addEventListener(
-  'click',
-  () =>
-    (timerId = setInterval(() => {
-      elBody.style.backgroundColor = getRandomHexColor();
-    }, 1000))
-);
+startBtn.addEventListener('click', () => {
+  startBtn.setAttribute('disabled', '');
+  console.log(saveBtn);
+  timerId = setInterval(() => {
+    elBody.style.backgroundColor = getRandomHexColor();
+  }, 1000);
+});
 
-stopBtn.addEventListener('click', () => clearInterval(timerId));
+stopBtn.addEventListener('click', () => {
+  startBtn.removeAttribute('disabled');
+  clearInterval(timerId);
+});
 
-//console.log(saveBtn);
+console.log(saveBtn);
