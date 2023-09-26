@@ -11,7 +11,7 @@ const stopBtn = document.querySelector('button[data-stop]');
 
 startBtn.addEventListener('click', () => {
   startBtn.setAttribute('disabled', '');
-  console.log(saveBtn);
+  console.log(startBtn);
   timerId = setInterval(() => {
     elBody.style.backgroundColor = getRandomHexColor();
   }, 1000);
@@ -22,4 +22,4 @@ stopBtn.addEventListener('click', () => {
   clearInterval(timerId);
 });
 
-console.log(saveBtn);
+console.log(startBtn);
